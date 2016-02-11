@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="th.book.texts.health.healthtextbooks.Fragment.SumOrderFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/order_price_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingBottom="4dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="4dp"
+        android:text="รวมเป็นเงิน - บาท"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/order_list_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingBottom="4dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="4dp"
+        android:text="รวมสินค้าทั้งหมด - รายการ"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingBottom="3dp"
+        android:paddingRight="10dp"
+        android:paddingTop="4dp"
+        android:text="หน่วย : ขีด"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/lv_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

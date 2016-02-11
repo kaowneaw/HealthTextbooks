@@ -1,124 +1,135 @@
 package th.book.texts.health.healthtextbooks;
 
-
-import android.annotation.TargetApi;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.multidex.MultiDex;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+import org.w3c.dom.Text;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import th.book.texts.health.healthtextbooks.Fragment.HomeFragment;
+import th.book.texts.health.healthtextbooks.Fragment.OrderFragment;
+import th.book.texts.health.healthtextbooks.Fragment.OrderReciveFragment;
+import th.book.texts.health.healthtextbooks.Fragment.RefrigeratorFragment;
+import th.book.texts.health.healthtextbooks.Utill.UserPreference;
 
-import java.io.IOException;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private EditText edtUsername;
-    private EditText edtPassword;
+    private UserPreference pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MultiDex.install(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        hideToolbar();
-        initWidget();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//            }
+//        });
+
+        pref = new UserPreference(this);
+        Toast.makeText(getApplicationContext(), pref.getName(), Toast.LENGTH_SHORT).show();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        initial();
     }
 
-
-    private void initWidget() {
-
-        edtUsername = (EditText) findViewById(R.id.edtUsername);
-        edtPassword = (EditText) findViewById(R.id.edtPassword);
-        Button btLogin = (Button) findViewById(R.id.btLogin);
-        btLogin.setOnClickListener(this);
+    private void initial() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, RefrigeratorFragment.newInstance("", "")).commit();
+        ImageView profile = (ImageView) findViewById(R.id.profile);
+        TextView nameProfile = (TextView) findViewById(R.id.nameProfile);
+        TextView emailProfile = (TextView) findViewById(R.id.emailProfile);
+//      nameProfile.setText(pref.getName());
+//      emailProfile.setText(pref.getEmail());
     }
+
 
     @Override
-    public void onClick(View v) {
-
-        if (v.getId() == R.id.btLogin) {
-
-            String username = this.edtUsername.getText().toString();
-            String password = this.edtPassword.getText().toString();
-            if (!username.equals("") && !password.equals("")) {
-                //login api
-                checkUserServer(username,password);
-            } else {
-                Toast.makeText(getApplicationContext(), "Plese fill in the blank", Toast.LENGTH_SHORT).show();
-                if (username.equals("")) {
-                    edtUsername.requestFocus();
-                } else if (password.equals("")) {
-                    edtPassword.requestFocus();
-                }
-            }
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void hideToolbar() {
-        View decorView = getWindow().getDecorView();
-        // Hide the status bar.
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
-        // Remember that you should never show the action bar if the
-        // status bar is hidden, so hide that too if necessary.
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        if (id == R.id.nav_camera) {
+            fragmentTransaction.replace(R.id.container, HomeFragment.newInstance("", ""));
+            fragmentTransaction.addToBackStack(null).commit();
+        } else if (id == R.id.nav_gallery) {
+            fragmentTransaction.replace(R.id.container, RefrigeratorFragment.newInstance("", ""));
+            fragmentTransaction.addToBackStack(null).commit();
+        } else if (id == R.id.refrigeratorMenu) {
+            fragmentTransaction.replace(R.id.container, RefrigeratorFragment.newInstance("", ""));
+            fragmentTransaction.addToBackStack(null).commit();
+        } else if (id == R.id.nav_order) {
+            fragmentTransaction.replace(R.id.container, OrderFragment.newInstance("", ""));
+            fragmentTransaction.addToBackStack(null).commit();
+        }else if(id == R.id.my_order){
+            fragmentTransaction.replace(R.id.container, OrderReciveFragment.newInstance("", ""));
+            fragmentTransaction.addToBackStack(null).commit();
         }
-    }
 
-    private void checkUserServer(final String username, final String password){
-
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... voids) {
-                OkHttpClient okHttpClient = new OkHttpClient();
-                RequestBody formBody = new FormEncodingBuilder()
-                        .add("username", username)
-                        .add("password", password)
-                        .build();
-                Request.Builder builder = new Request.Builder();
-                Request request = builder.url("http://"+HeathTextBook.IP_CONFIG+"/heathTextBook/login.php").post(formBody).build();
-
-                try {
-                    Response response = okHttpClient.newCall(request).execute();
-                    if (response.isSuccessful()) {
-                        return response.body().string();
-                    } else {
-                        return "Not Success - code : " + response.code();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return "Error - " + e.getMessage();
-                }
-            }
-
-            @Override
-            protected void onPostExecute(String string) {
-                super.onPostExecute(string);
-                Toast.makeText(getApplicationContext(),string,Toast.LENGTH_SHORT).show();
-                try {
-                    JSONObject jsObj = new JSONObject(string);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.execute();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
