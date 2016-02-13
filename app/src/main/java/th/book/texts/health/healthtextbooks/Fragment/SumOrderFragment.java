@@ -175,12 +175,20 @@ public class SumOrderFragment extends Fragment {
                 if (results.isStatus()) {
 
                     Toast.makeText(getActivity(), "สั่งซื้อสำเร็จ", Toast.LENGTH_SHORT).show();
+                    closeFragment();
                 } else {
                     Toast.makeText(getActivity(), "สั่งซื้อไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                 }
 
             }
         }.execute();
+
+    }
+
+    private void closeFragment() {
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        fm.popBackStack();
 
     }
 

@@ -87,6 +87,7 @@ public class OrderReciveFragment extends Fragment implements AdapterView.OnItemC
         super.onResume();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("รายการสั่งซื้อของฉัน");
         callService();
+        Log.d("OnResume","Resume");
     }
 
     private void callService() {

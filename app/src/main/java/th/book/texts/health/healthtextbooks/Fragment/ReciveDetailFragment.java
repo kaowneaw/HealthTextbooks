@@ -1,11 +1,19 @@
 package th.book.texts.health.healthtextbooks.Fragment;
 
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -13,14 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.List;
 
-import th.book.texts.health.healthtextbooks.Adapter.OrderReciveAdapter;
 import th.book.texts.health.healthtextbooks.Adapter.OrderSumAdapter;
 import th.book.texts.health.healthtextbooks.R;
 import th.book.texts.health.healthtextbooks.model.Matirial;
@@ -41,23 +50,15 @@ public class ReciveDetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ListView lv_order;
-    TextView order_list_total,order_price_total;
-    List<Matirial> listMat;
-
+    private ListView lv_order;
+    private TextView order_list_total, order_price_total;
+    private List<Matirial> listMat;
+    private ResultEntity results;
 
     public ReciveDetailFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ReciveDetailFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static ReciveDetailFragment newInstance(String param1, String param2, Order myOrder) {
         ReciveDetailFragment fragment = new ReciveDetailFragment();
@@ -72,10 +73,46 @@ public class ReciveDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.recive_detail, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.recive) {
+            confirmDialog();
+        }
+
+        return true;
+    }
+
+    private void confirmDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("รับสินค้า")
+                .setMessage("ยืนยันการรับสินค้าไปยังตู้เย็นของฉัน")
+                .setIcon(android.R.drawable.ic_input_add)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        reciveMatirial();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
     private void callService() {
@@ -118,6 +155,73 @@ public class ReciveDetailFragment extends Fragment {
 
             }
         }.execute();
+
+    }
+
+
+    private void reciveMatirial() {
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                String url = "http://www.jaa-ikuzo.com/htb/reciveMat.php";
+
+                FormEncodingBuilder formBodyBuilder = new FormEncodingBuilder();
+                int index = 0;
+                for (Matirial m : listMat) {
+                    formBodyBuilder.add("matAmount[" + index + "]", m.getAmount() + "");
+                    formBodyBuilder.add("matId[" + index + "]", m.getMatId() + "");
+                    formBodyBuilder.add("personalId[" + index + "]", "1");
+                    index++;
+                }
+
+                formBodyBuilder.add("orderId", ReciveDetailFragment.myOrder.getOrderId() + "");
+
+                RequestBody formBody = formBodyBuilder.build();
+
+                OkHttpClient client = new OkHttpClient();
+
+                Request request = new Request.Builder()
+                        .post(formBody)
+                        .url(url)
+                        .build();
+
+                try {
+
+                    Gson gson = new Gson();
+                    Response response = client.newCall(request).execute();
+                    String reponse = response.body().string();
+                    results = gson.fromJson(reponse, ResultEntity.class);
+                    Log.v("=>", reponse);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                if (results.isStatus()) {
+                    closeFragment();
+                } else {
+
+                    Toast.makeText(getActivity(), "ไม่สามารถบันทึกได้", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }.execute();
+    }
+
+
+    private void closeFragment() {
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        fm.popBackStack();
 
     }
 
