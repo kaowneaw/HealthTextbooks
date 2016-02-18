@@ -10,9 +10,17 @@ public class ResultEntity {
     private List<Refrigerator> resultsRefrigerator;
     private List<Matirial> resultsMatirial;
     private List<Order> resultsOrder;
+    private List<ReciveDetail> resultsRecive;
     private List<String> results;
     boolean status;
 
+    public List<ReciveDetail> getResultsRecive() {
+        return resultsRecive;
+    }
+
+    public void setResultsRecive(List<ReciveDetail> resultsRecive) {
+        this.resultsRecive = resultsRecive;
+    }
 
     public List<Refrigerator> getResultsRefrigerator() {
         return resultsRefrigerator;

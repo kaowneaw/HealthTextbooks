@@ -21,6 +21,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import th.book.texts.health.healthtextbooks.Fragment.HomeFragment;
+import th.book.texts.health.healthtextbooks.Fragment.MyReciveFragment;
 import th.book.texts.health.healthtextbooks.Fragment.OrderFragment;
 import th.book.texts.health.healthtextbooks.Fragment.OrderReciveFragment;
 import th.book.texts.health.healthtextbooks.Fragment.RefrigeratorFragment;
@@ -114,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_camera) {
             fragmentTransaction.replace(R.id.container, HomeFragment.newInstance("", ""));
             fragmentTransaction.addToBackStack(null).commit();
-        } else if (id == R.id.nav_gallery) {
-            fragmentTransaction.replace(R.id.container, RefrigeratorFragment.newInstance("", ""));
+        } else if (id == R.id.recivebook) {
+            fragmentTransaction.replace(R.id.container, MyReciveFragment.newInstance("", ""));
             fragmentTransaction.addToBackStack(null).commit();
         } else if (id == R.id.refrigeratorMenu) {
             fragmentTransaction.replace(R.id.container, RefrigeratorFragment.newInstance("", ""));
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_order) {
             fragmentTransaction.replace(R.id.container, OrderFragment.newInstance("", ""));
             fragmentTransaction.addToBackStack(null).commit();
-        }else if(id == R.id.my_order){
+        } else if (id == R.id.my_order) {
             fragmentTransaction.replace(R.id.container, OrderReciveFragment.newInstance("", ""));
             fragmentTransaction.addToBackStack(null).commit();
         }

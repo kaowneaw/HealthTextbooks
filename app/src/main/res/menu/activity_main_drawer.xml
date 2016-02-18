@@ -7,9 +7,9 @@
             android:icon="@mipmap/home"
             android:title="หน้าแรก" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/recivebook"
+            android:icon="@mipmap/kitchen"
+            android:title="สุตรอาหารของฉัน" />
         <item
             android:id="@+id/refrigeratorMenu"
             android:icon="@mipmap/refrigerator"
