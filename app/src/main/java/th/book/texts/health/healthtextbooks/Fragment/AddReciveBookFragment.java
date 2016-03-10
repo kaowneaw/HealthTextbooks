@@ -117,7 +117,6 @@ public class AddReciveBookFragment extends Fragment {
                 Toast.makeText(getActivity(), "กรุณาเลือกวัตถุดิบอย่างน้อยหนึ่งชนิด", Toast.LENGTH_SHORT).show();
             }
 
-
         }
 
         return super.onOptionsItemSelected(item);

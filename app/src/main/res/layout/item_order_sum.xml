@@ -3,55 +3,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:padding="8dp">
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="20"
-        android:gravity="center">
-
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="45dip"
-            android:layout_height="45dip"
-            android:layout_centerInParent="true" />
-
-        <ImageView
-            android:id="@+id/imgMat"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
-
-    </RelativeLayout>
+    android:padding="2dp">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="60"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/matName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end" />
-
-        <TextView
-            android:id="@+id/matPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textSize="12sp" />
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/matAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="20"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/layer_card_background"
         android:gravity="center"
-        android:textSize="14sp" />
+        android:padding="8dp">
 
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="45dip"
+                android:layout_height="45dip"
+                android:layout_centerInParent="true" />
+
+            <ImageView
+                android:id="@+id/imgMat"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/matName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/matPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/matAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:textSize="14sp" />
+    </LinearLayout>
 </LinearLayout>

@@ -3,11 +3,15 @@ package th.book.texts.health.healthtextbooks.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,7 +33,7 @@ import th.book.texts.health.healthtextbooks.model.Matirial;
 import th.book.texts.health.healthtextbooks.model.Refrigerator;
 import th.book.texts.health.healthtextbooks.model.ResultEntity;
 
-public class RefrigeratorFragment extends Fragment {
+public class RefrigeratorFragment extends Fragment implements AdapterView.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,7 +42,7 @@ public class RefrigeratorFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ListView refrag_lv;
+    private GridView refrag_lv;
     private List<Refrigerator> listRefri;
 
     public RefrigeratorFragment() {
@@ -69,15 +73,15 @@ public class RefrigeratorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_refrigerator, container, false);
-        refrag_lv = (ListView) v.findViewById(R.id.refrag_lv);
-
+        refrag_lv = (GridView) v.findViewById(R.id.refrag_lv);
+        refrag_lv.setOnItemClickListener(this);
         return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("ตู้เย็นของฉัน");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("ตู้เย็นของฉัน");
         callService();
     }
 
@@ -121,8 +125,15 @@ public class RefrigeratorFragment extends Fragment {
                 refrag_lv.setAdapter(adapter);
             }
         }.execute();
-
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, RefrigeratorDetailFragment.newInstance("", "", listRefri.get(position)));
+        fragmentTransaction.addToBackStack(null).commit();
+    }
 }

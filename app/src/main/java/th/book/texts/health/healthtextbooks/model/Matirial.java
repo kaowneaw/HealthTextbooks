@@ -18,6 +18,10 @@ public class Matirial implements Parcelable {
     private String img;
     private double price;
     private double amount;
+    private double amountTotal;
+
+    public Matirial() {
+    }
 
     public Matirial(int matId, String matName, int matTypeId, float calorie, int unitId, int expireDay, String matDesc, String img, double price, double amount) {
         this.matId = matId;
@@ -31,6 +35,20 @@ public class Matirial implements Parcelable {
         this.price = price;
         this.amount = amount;
     }
+    public Matirial(int matId, String matName, int matTypeId, float calorie, int unitId, int expireDay, String matDesc, String img, double price, double amount, double amountTotal) {
+        this.matId = matId;
+        this.matName = matName;
+        this.matTypeId = matTypeId;
+        this.calorie = calorie;
+        this.unitId = unitId;
+        this.expireDay = expireDay;
+        this.matDesc = matDesc;
+        this.img = img;
+        this.price = price;
+        this.amount = amount;
+        this.amountTotal = amountTotal;
+    }
+
 
     public int getMatId() {
         return matId;
@@ -115,6 +133,15 @@ public class Matirial implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+
+    public double getAmountTotal() {
+        return amountTotal;
+    }
+
+    public void setAmountTotal(double amountTotal) {
+        this.amountTotal = amountTotal;
     }
 
     @Override

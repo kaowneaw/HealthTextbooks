@@ -2,67 +2,88 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="10dp">
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="20"
-        android:gravity="center">
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="45dip"
-            android:layout_height="45dip"
-            android:layout_centerInParent="true" />
-
-        <ImageView
-            android:id="@+id/imgMat"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
-
-    </RelativeLayout>
-
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="3dp">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="80">
+        android:background="@drawable/layer_card_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="80"
-            android:orientation="vertical">
+            android:gravity="center">
 
-            <TextView
-                android:id="@+id/desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="xxxxxxx"
-                android:textStyle="bold" />
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="45dip"
+                android:layout_height="45dip"
+                android:layout_centerInParent="true" />
 
+            <ImageView
+                android:id="@+id/imgMat"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
 
-            <TextView
-                android:id="@+id/expireIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="xxxxxxx"
-                android:textSize="12sp" />
-
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/amount"
-            android:layout_gravity="center"
-            android:layout_width="0dp"
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="20"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="2"
             android:text="xxxxxxx"
             android:textStyle="bold" />
 
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="80">-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="80"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/desc"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="xxxxxxx"-->
+        <!--android:textStyle="bold" />-->
+
+
+        <!--<TextView-->
+        <!--android:id="@+id/expireIn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="xxxxxxx"-->
+        <!--android:textSize="12sp" />-->
+
+        <!--</LinearLayout>-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/amount"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="20"-->
+        <!--android:text="xxxxxxx"-->
+        <!--android:textStyle="bold" />-->
+
+        <!--</LinearLayout>-->
+
     </LinearLayout>
-
-
 </LinearLayout>

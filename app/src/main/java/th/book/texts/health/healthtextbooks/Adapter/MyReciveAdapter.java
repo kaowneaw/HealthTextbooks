@@ -20,14 +20,14 @@ import th.book.texts.health.healthtextbooks.model.ReciveDetail;
 /**
  * Created by KaowNeaw on 1/24/2016.
  */
-public class MyReciverAdapter extends BaseAdapter {
+public class MyReciveAdapter extends BaseAdapter {
 
     private List<ReciveDetail> listRecive;
     private Context context;
     AQuery aq;
     final String PATH = "http://www.jaa-ikuzo.com/htb/img/mat/";
 
-    public MyReciverAdapter(List<ReciveDetail> listRecive, Context context) {
+    public MyReciveAdapter(List<ReciveDetail> listRecive, Context context) {
         this.listRecive = listRecive;
         this.context = context;
     }

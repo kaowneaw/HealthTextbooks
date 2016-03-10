@@ -8,14 +8,42 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/imgRecipe"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:src="@mipmap/img_defalut" />
+
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/chooseImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="เลือกรูปภาพ" />
+
+    </TableRow>
+
     <EditText
         android:id="@+id/reciveStep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:gravity="top|left"
         android:hint="คำแนะนำการทำสูตรอาหาร"
         android:inputType="textMultiLine"
-        android:lines="15"
+        android:lines="10"
         android:scrollHorizontally="false" />
 
 

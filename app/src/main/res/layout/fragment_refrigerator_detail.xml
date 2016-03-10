@@ -3,39 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragment.RefrigeratorFragment">
+    tools:context="th.book.texts.health.healthtextbooks.Fragment.RefrigeratorDetailFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@android:color/transparent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"></LinearLayout>
-
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ค้นหา : "
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/refrag_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </TableRow>
-
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -62,11 +36,10 @@
             android:textStyle="bold" />
     </TableRow>
 
-    <GridView
-        android:id="@+id/refrag_lv"
+    <ListView
+        android:id="@+id/refrag_detail_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:numColumns="3" />
+        android:layout_marginTop="5dp" />
 
 </LinearLayout>

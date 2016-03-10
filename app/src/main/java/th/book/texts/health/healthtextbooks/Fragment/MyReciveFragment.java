@@ -25,8 +25,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.util.List;
 
-import th.book.texts.health.healthtextbooks.Adapter.MyReciverAdapter;
-import th.book.texts.health.healthtextbooks.Adapter.OrderAdapter;
+import th.book.texts.health.healthtextbooks.Adapter.MyReciveAdapter;
 import th.book.texts.health.healthtextbooks.R;
 import th.book.texts.health.healthtextbooks.model.ReciveDetail;
 import th.book.texts.health.healthtextbooks.model.ResultEntity;
@@ -43,7 +42,7 @@ public class MyReciveFragment extends Fragment implements AdapterView.OnItemClic
     private String mParam2;
     private ListView lv_recive;
     List<ReciveDetail> listRecive;
-    MyReciverAdapter adapter;
+    MyReciveAdapter adapter;
 
     public MyReciveFragment() {
         // Required empty public constructor
@@ -147,7 +146,7 @@ public class MyReciveFragment extends Fragment implements AdapterView.OnItemClic
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                adapter = new MyReciverAdapter(listRecive, getActivity());
+                adapter = new MyReciveAdapter(listRecive, getActivity());
                 lv_recive.setAdapter(adapter);
             }
 

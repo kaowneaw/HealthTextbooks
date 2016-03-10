@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.androidquery.AQuery;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import th.book.texts.health.healthtextbooks.R;
@@ -19,14 +18,14 @@ import th.book.texts.health.healthtextbooks.model.Refrigerator;
 /**
  * Created by KaowNeaw on 1/24/2016.
  */
-public class RefrigeratorAdapter extends BaseAdapter {
+public class RefrigeratorDetailAdapter extends BaseAdapter {
 
     private List<Refrigerator> listRefri;
     private Context context;
     AQuery aq;
     final String PATH = "http://www.jaa-ikuzo.com/htb/img/mat/";
 
-    public RefrigeratorAdapter(List<Refrigerator> listRefri, Context context) {
+    public RefrigeratorDetailAdapter(List<Refrigerator> listRefri, Context context) {
         this.listRefri = listRefri;
         this.context = context;
     }
@@ -54,12 +53,12 @@ public class RefrigeratorAdapter extends BaseAdapter {
         if (convertView == null) {
 
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_myrefrag, null);
+            convertView = inflater.inflate(R.layout.item_myrefrag_detail, null);
 
             holder = new viewHolder();
             holder.desc = (TextView) convertView.findViewById(R.id.desc);
-//          holder.amount = (TextView) convertView.findViewById(R.id.amount);
-//          holder.expireIn = (TextView) convertView.findViewById(R.id.expireIn);
+            holder.amount = (TextView) convertView.findViewById(R.id.amount);
+            holder.expireIn = (TextView) convertView.findViewById(R.id.expireIn);
             holder.imgMat = (ImageView) convertView.findViewById(R.id.imgMat);
 
             convertView.setTag(holder);
@@ -68,8 +67,8 @@ public class RefrigeratorAdapter extends BaseAdapter {
         }
         aq = new AQuery(convertView);
         holder.desc.setText(listRefri.get(position).getMatName());
-//      holder.amount.setText(listRefri.get(position).getAmount() + "");
-//      holder.expireIn.setText("เหลือเวลาอีก "+listRefri.get(position).getExpireIn()+" วันก่อนหมดอายุ");
+        holder.amount.setText(listRefri.get(position).getAmount() + "");
+        holder.expireIn.setText("เหลือเวลาอีก " + listRefri.get(position).getExpireIn() + " วันก่อนหมดอายุ");
         aq.id(holder.imgMat).progress(R.id.progress).image(PATH + listRefri.get(position).getImg());
         return convertView;
     }

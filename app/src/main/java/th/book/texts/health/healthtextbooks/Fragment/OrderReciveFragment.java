@@ -87,7 +87,7 @@ public class OrderReciveFragment extends Fragment implements AdapterView.OnItemC
         super.onResume();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("รายการสั่งซื้อของฉัน");
         callService();
-        Log.d("OnResume","Resume");
+        Log.d("OnResume", "Resume");
     }
 
     private void callService() {
@@ -96,7 +96,7 @@ public class OrderReciveFragment extends Fragment implements AdapterView.OnItemC
 
             @Override
             protected Void doInBackground(Void... voids) {
-                String url = "http://www.jaa-ikuzo.com/htb/getMyRecive.php?personId=1";
+                String url = "http://www.jaa-ikuzo.com/htb/getMyOrder.php?personId=1";
                 OkHttpClient client = new OkHttpClient();
 
 
@@ -115,7 +115,6 @@ public class OrderReciveFragment extends Fragment implements AdapterView.OnItemC
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 return null;
@@ -137,7 +136,7 @@ public class OrderReciveFragment extends Fragment implements AdapterView.OnItemC
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, ReciveDetailFragment.newInstance("", "",listOrder.get(position)));
+        fragmentTransaction.replace(R.id.container, ReciveDetailFragment.newInstance("", "", listOrder.get(position)));
         fragmentTransaction.addToBackStack(null).commit();
     }
 }
