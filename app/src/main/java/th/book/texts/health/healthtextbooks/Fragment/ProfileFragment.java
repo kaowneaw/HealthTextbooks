@@ -41,7 +41,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
     private ImageView img_profile;
-    TextView name_profile, email_profile, calrories;
+    TextView name_profile, email_profile, calrories, recomendMenu;
     EditText height, weight, age;
     Spinner sex;
     Button cal;
@@ -105,6 +105,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         img_profile = (ImageView) v.findViewById(R.id.img_profile);
         name_profile = (TextView) v.findViewById(R.id.name_profile);
         email_profile = (TextView) v.findViewById(R.id.email_profile);
+        recomendMenu = (TextView) v.findViewById(R.id.recomendMenu);
+        recomendMenu.setVisibility(View.INVISIBLE);
         height = (EditText) v.findViewById(R.id.height);
         weight = (EditText) v.findViewById(R.id.weight);
         sex = (Spinner) v.findViewById(R.id.sex);
@@ -115,6 +117,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         name_profile.setText("ชื่อผู้ใช้ " + pref.getName());
         email_profile.setText("e-mail " + pref.getEmail());
         cal.setOnClickListener(this);
+        recomendMenu.setOnClickListener(this);
         List<String> categories = new ArrayList<String>();
         categories.add("ชาย");
         categories.add("หญิง");
@@ -127,20 +130,29 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (v == cal) {
+            double BMR = 0;
+            String valSex = sex.getSelectedItem().toString();
+            double height = Double.parseDouble(this.height.getText().toString());
+            double weight = Double.parseDouble(this.weight.getText().toString());
+            double age = Double.parseDouble(this.age.getText().toString());
+            if (valSex.equals("ชาย")) {
 
-        double BMR = 0;
-        String valSex = sex.getSelectedItem().toString();
-        double height = Double.parseDouble(this.height.getText().toString());
-        double weight = Double.parseDouble(this.weight.getText().toString());
-        double age = Double.parseDouble(this.age.getText().toString());
-        if (valSex.equals("ชาย")) {
+                BMR = 10 * weight + 6.25 * height - 5 * age + 5;
 
-            BMR = 10 * weight + 6.25 * height - 5 * age + 5;
-
+            } else {
+                BMR = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+            calrories.setText("แคลลอรี่แนะนำต่อวัน " + BMR);
+            recomendMenu.setVisibility(View.VISIBLE);
         } else {
-            BMR = 10 * weight + 6.25 * height - 5 * age - 161;
+
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, HomeFragment.newInstance("", ""));
+            fragmentTransaction.addToBackStack(null).commit();
         }
-        calrories.setText("แคลลอรี่แนะนำต่อวัน " + BMR);
+
 
     }
 }
