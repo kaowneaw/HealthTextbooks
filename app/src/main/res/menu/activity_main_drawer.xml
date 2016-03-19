@@ -7,9 +7,18 @@
             android:icon="@mipmap/home"
             android:title="หน้าแรก" />
         <item
+            android:id="@+id/profile"
+            android:icon="@mipmap/usermenu"
+            android:title="My Profile" />
+        <item
             android:id="@+id/recivebook"
             android:icon="@mipmap/kitchen"
             android:title="สุตรอาหารของฉัน" />
+        <!--<item-->
+        <!--android:id="@+id/diet"-->
+        <!--android:icon="@mipmap/kitchen"-->
+        <!--android:title="Diet" />-->
+
         <item
             android:id="@+id/refrigeratorMenu"
             android:icon="@mipmap/refrigerator"

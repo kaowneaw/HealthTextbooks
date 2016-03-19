@@ -20,10 +20,12 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import th.book.texts.health.healthtextbooks.Fragment.DietFragment;
 import th.book.texts.health.healthtextbooks.Fragment.HomeFragment;
 import th.book.texts.health.healthtextbooks.Fragment.MyReciveFragment;
 import th.book.texts.health.healthtextbooks.Fragment.OrderFragment;
 import th.book.texts.health.healthtextbooks.Fragment.OrderReciveFragment;
+import th.book.texts.health.healthtextbooks.Fragment.ProfileFragment;
 import th.book.texts.health.healthtextbooks.Fragment.RefrigeratorFragment;
 import th.book.texts.health.healthtextbooks.Utill.UserPreference;
 
@@ -114,6 +116,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_camera) {
             fragmentTransaction.replace(R.id.container, HomeFragment.newInstance("", ""));
+            fragmentTransaction.addToBackStack(null).commit();
+        } else if (id == R.id.profile) {
+            fragmentTransaction.replace(R.id.container, ProfileFragment.newInstance("", ""));
             fragmentTransaction.addToBackStack(null).commit();
         } else if (id == R.id.recivebook) {
             fragmentTransaction.replace(R.id.container, MyReciveFragment.newInstance("", ""));
