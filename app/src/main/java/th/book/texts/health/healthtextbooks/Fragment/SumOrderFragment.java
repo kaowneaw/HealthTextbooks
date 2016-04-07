@@ -37,6 +37,7 @@ import java.util.List;
 
 import th.book.texts.health.healthtextbooks.Adapter.OrderSumAdapter;
 import th.book.texts.health.healthtextbooks.R;
+import th.book.texts.health.healthtextbooks.Utill.UserPreference;
 import th.book.texts.health.healthtextbooks.model.Matirial;
 import th.book.texts.health.healthtextbooks.model.ResultEntity;
 
@@ -149,6 +150,8 @@ public class SumOrderFragment extends Fragment {
                     formBodyBuilder.add("matPrice[" + index + "]", m.getPrice() + "");
                     index++;
                 }
+                UserPreference pref = new UserPreference(getContext());
+                formBodyBuilder.add("personId", pref.getUserID());
                 formBodyBuilder.add("totalPrice", getPrice(listMatConv) + "");
 
                 RequestBody formBody = formBodyBuilder.build();
@@ -204,7 +207,7 @@ public class SumOrderFragment extends Fragment {
 
         for (Matirial mat : arrMat) {
 
-            Log.v("Amount ", mat.getAmount() + "");
+            //Log.v("Amount ", mat.getAmount() + "");
             if (mat.getAmount() > 0.0) {
                 list.add(mat);
             }

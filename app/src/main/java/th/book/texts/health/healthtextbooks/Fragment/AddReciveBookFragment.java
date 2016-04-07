@@ -92,14 +92,30 @@ public class AddReciveBookFragment extends Fragment {
         //noinspection SimplifiableIfStatement
         if (id == R.id.next_recivebook) {
 
-            for (int i = 0; i < lv_mat_recivebook.getLastVisiblePosition() - lv_mat_recivebook.getFirstVisiblePosition(); i++) {
+//            for (int i = 0; i < lv_mat_recivebook.getLastVisiblePosition() - lv_mat_recivebook.getFirstVisiblePosition(); i++) {
+//
+//                if (lv_mat_recivebook.getChildAt(i) != null) {
+//
+//                    View view = lv_mat_recivebook.getChildAt(i);
+//                    EditText editText = (EditText) view.findViewById(R.id.matAmount);
+//                    String string = editText.getText().toString();
+//                    if (!string.equals("")) listMat.get(i).setAmount(Double.parseDouble(string));
+//                }
+//            }
+            for (int i = 0; i < listMat.size(); i++) {
 
-                if (lv_mat_recivebook.getChildAt(i) != null) {
-
-                    View view = lv_mat_recivebook.getChildAt(i);
-                    EditText editText = (EditText) view.findViewById(R.id.matAmount);
-                    String string = editText.getText().toString();
-                    if (!string.equals("")) listMat.get(i).setAmount(Double.parseDouble(string));
+                Log.v("val=> " + i, adapter.getValueFromEDT(i) + "");
+//                if (lv_order.getChildAt(i) != null) {
+//
+//                    View view = lv_order.getChildAt(i);
+//                    EditText editText = (EditText) view.findViewById(R.id.matAmount);
+//                    int index = (Integer)editText.getTag();
+//                    //Log.v("Tag",(Integer)editText.getTag()+"");
+//                    String string = editText.getText().toString();
+//                    if (!string.equals("")) listMat.get(index).setAmount(Double.parseDouble(string));
+//                }
+                if (adapter.getValueFromEDT(i) != -1) {
+                    listMat.get(i).setAmount(adapter.getValueFromEDT(i));
                 }
             }
 

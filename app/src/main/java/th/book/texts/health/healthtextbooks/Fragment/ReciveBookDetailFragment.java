@@ -32,8 +32,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import th.book.texts.health.healthtextbooks.Adapter.OrderAdapter;
 import th.book.texts.health.healthtextbooks.Adapter.ReciveBookDetailAdapter;
 import th.book.texts.health.healthtextbooks.R;
+import th.book.texts.health.healthtextbooks.Utill.UserPreference;
 import th.book.texts.health.healthtextbooks.model.Matirial;
 import th.book.texts.health.healthtextbooks.model.ReciveDetail;
 import th.book.texts.health.healthtextbooks.model.ResultEntity;
@@ -50,8 +52,10 @@ public class ReciveBookDetailFragment extends Fragment {
     private String reciveId;
     private ListView lv_detailMat;
     private TextView tv_howto;
-    List<ReciveDetail> listReciveDetail;
-    List<Matirial> listMatirial;
+    private List<ReciveDetail> listReciveDetail;
+    private List<Matirial> listMatirial;
+    private List<Matirial> matToOrder;
+    private List<Matirial> listALLMat;
 
     public ReciveBookDetailFragment() {
         // Required empty public constructor
@@ -104,6 +108,7 @@ public class ReciveBookDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("ขั้นตอนการทำ");
+        getAllMat();
         callService(reciveId);
     }
 
@@ -135,8 +140,8 @@ public class ReciveBookDetailFragment extends Fragment {
                     formBodyBuilder.add("matId[" + index + "]", m.getMatId() + "");
                     index++;
                 }
-
-                formBodyBuilder.add("personId", "1");
+                UserPreference pref = new UserPreference(getContext());
+                formBodyBuilder.add("personId", pref.getUserID());
 
                 RequestBody formBody = formBodyBuilder.build();
                 Request request = new Request.Builder()
@@ -180,7 +185,8 @@ public class ReciveBookDetailFragment extends Fragment {
             @Override
             protected Void doInBackground(Void... voids) {
                 //get stock total in refrigerator
-                String url = "http://www.jaa-ikuzo.com/htb/getRefragTotal.php?personId=1";
+                UserPreference pref = new UserPreference(getContext());
+                String url = "http://www.jaa-ikuzo.com/htb/getRefragTotal.php?personId=" + pref.getUserID();
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
@@ -206,9 +212,9 @@ public class ReciveBookDetailFragment extends Fragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                List<Matirial> matToOrder = new ArrayList<>();
+                matToOrder = new ArrayList<>();
                 for (ReciveDetail obj : listReciveDetail) {
-                    Matirial matNotEnough = checkStrockRefrigerator(obj);
+                    Matirial matNotEnough = checkStockRefrigerator(obj);
                     if (matNotEnough != null) {
                         matToOrder.add(matNotEnough);
                     }
@@ -227,7 +233,6 @@ public class ReciveBookDetailFragment extends Fragment {
                     }
 
                     confirmOrder();
-
                 }
             }
 
@@ -303,19 +308,20 @@ public class ReciveBookDetailFragment extends Fragment {
 
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.container, OrderFragment.newInstance("", ""));
+                        fragmentTransaction.replace(R.id.container, SumOrderFragment.newInstance("", "", matToOrder));
                         fragmentTransaction.addToBackStack(null).commit();
                     }
                 })
                 .setNegativeButton(android.R.string.no, null).show();
     }
 
-    private Matirial checkStrockRefrigerator(ReciveDetail use) {
+    private Matirial checkStockRefrigerator(ReciveDetail use) {
 
         int isNotHaveInRefrag = 0;
         for (Matirial obj : listMatirial) { //obj is mat in Refrigerator
             if (use.getMatId() == obj.getMatId()) {
                 if (use.getAmount() > obj.getAmountTotal()) {
+                    obj.setAmount(use.getAmount() - obj.getAmountTotal());//amount balance
                     return obj;
                 }
             }
@@ -325,12 +331,65 @@ public class ReciveBookDetailFragment extends Fragment {
         }
         if (isNotHaveInRefrag == listMatirial.size()) {
             //if mat is not have in my refragerator
-            Matirial mat = new Matirial();
-            mat.setMatId(use.getMatId());
+            Matirial mat = getMatData(use.getMatId());
+//            mat.setMatId(use.getMatId());
             mat.setAmount(use.getAmount());
             return mat;
         }
         return null;
+    }
+
+
+    private Matirial getMatData(int id) {
+
+        for (Matirial mat : listALLMat) {
+            if (mat.getMatId() == id) {
+                Log.v("id = ", mat.getMatId() + "");
+                return mat;
+            }
+        }
+
+        return new Matirial();
+    }
+
+
+    private void getAllMat() {
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                String url = "http://www.jaa-ikuzo.com/htb/common/getAllMat.php";
+                OkHttpClient client = new OkHttpClient();
+
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+
+                try {
+
+                    Gson gson = new Gson();
+                    Response response = client.newCall(request).execute();
+                    String reponse = response.body().string();
+                    Log.v("=>", reponse);
+                    ResultEntity results = gson.fromJson(reponse, ResultEntity.class);
+                    listALLMat = results.getResultsMatirial();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+            }
+        }.execute();
+
     }
 
 

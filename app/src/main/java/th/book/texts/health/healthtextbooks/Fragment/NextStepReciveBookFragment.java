@@ -157,6 +157,8 @@ public class NextStepReciveBookFragment extends Fragment implements View.OnClick
                     index++;
                 }
                 Log.v("reciveName", reciveName);
+                UserPreference pref = new UserPreference(getContext());
+                formBodyBuilder.add("personId", pref.getUserID());
                 formBodyBuilder.add("recipeName", reciveName);
                 formBodyBuilder.add("recipeDesc", reciveDesc);
 
@@ -269,7 +271,8 @@ public class NextStepReciveBookFragment extends Fragment implements View.OnClick
                     multipartBuilder.addFormDataPart("matId[" + index + "]", m.getMatId() + "");
                     index++;
                 }
-
+                UserPreference pref = new UserPreference(getContext());
+                multipartBuilder.addFormDataPart("personId", pref.getUserID());
                 multipartBuilder.addFormDataPart("recipeName", reciveName);
                 multipartBuilder.addFormDataPart("recipeDesc", reciveDesc);
                 multipartBuilder.addFormDataPart("myfile", src.getName(), RequestBody.create(MEDIA_TYPE_PNG, reduceSizeFile(src)));

@@ -17,6 +17,8 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import th.book.texts.health.healthtextbooks.R;
@@ -67,6 +69,8 @@ public class HomeAdapter extends BaseAdapter {
             holder.name_recipe = (TextView) convertView.findViewById(R.id.name_recipe);
             holder.img_content = (ImageView) convertView.findViewById(R.id.img_content);
             holder.date = (TextView) convertView.findViewById(R.id.date);
+            holder.img_profile = (ImageView) convertView.findViewById(R.id.img_profile);
+            holder.name = (TextView) convertView.findViewById(R.id.name);
             convertView.setTag(holder);
         } else {
             holder = (viewHolder) convertView.getTag();
@@ -74,7 +78,7 @@ public class HomeAdapter extends BaseAdapter {
         aq = new AQuery(convertView);
         holder.name_recipe.setText(listRecive.get(position).getRecipeName());
         holder.date.setText(listRecive.get(position).getRecipeDate());
-//      aq.id(holder.img_content).progress(R.id.progress).image(PATH + listRecive.get(position).getImg());
+        aq.id(holder.img_profile).progress(R.id.progress).image("https://graph.facebook.com/" + listRecive.get(position).getPersonId() + "/picture?width=200&height=200");
         final viewHolder finalHolder = holder;
         aq.ajax(PATH + listRecive.get(position).getImg(), Bitmap.class, 0, new AjaxCallback<Bitmap>() {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -86,6 +90,7 @@ public class HomeAdapter extends BaseAdapter {
                 finalHolder.img_content.setBackground(d);
             }
         });
+        holder.name.setText(listRecive.get(position).getPersonName());
         return convertView;
     }
 
@@ -94,6 +99,8 @@ public class HomeAdapter extends BaseAdapter {
         TextView name_recipe;
         ImageView img_content;
         TextView date;
+        TextView name;
+        ImageView img_profile;
     }
 
 }

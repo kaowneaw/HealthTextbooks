@@ -34,6 +34,7 @@ import java.util.List;
 
 import th.book.texts.health.healthtextbooks.Adapter.OrderSumAdapter;
 import th.book.texts.health.healthtextbooks.R;
+import th.book.texts.health.healthtextbooks.Utill.UserPreference;
 import th.book.texts.health.healthtextbooks.model.Matirial;
 import th.book.texts.health.healthtextbooks.model.Order;
 import th.book.texts.health.healthtextbooks.model.ResultEntity;
@@ -86,6 +87,7 @@ public class ReciveDetailFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        if(ReciveDetailFragment.myOrder.getOrderStatus() != 0)
         inflater.inflate(R.menu.recive_detail, menu);
     }
 
@@ -170,16 +172,16 @@ public class ReciveDetailFragment extends Fragment {
             protected Void doInBackground(Void... voids) {
 
                 String url = "http://www.jaa-ikuzo.com/htb/reciveMat.php";
-
+                UserPreference pref = new UserPreference(getContext());
                 FormEncodingBuilder formBodyBuilder = new FormEncodingBuilder();
                 int index = 0;
                 for (Matirial m : listMat) {
                     formBodyBuilder.add("matAmount[" + index + "]", m.getAmount() + "");
                     formBodyBuilder.add("matId[" + index + "]", m.getMatId() + "");
-                    formBodyBuilder.add("personalId[" + index + "]", "1");
+
                     index++;
                 }
-
+                formBodyBuilder.add("personId", pref.getUserID());
                 formBodyBuilder.add("orderId", ReciveDetailFragment.myOrder.getOrderId() + "");
 
                 RequestBody formBody = formBodyBuilder.build();

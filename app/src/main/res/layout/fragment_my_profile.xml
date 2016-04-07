@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_vertical_margin"
+    tools:context="th.book.texts.health.healthtextbooks.Fragment.MyProfileFragment">
+
+    <ImageView
+        android:id="@+id/img_profile"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="ชื่อผู้ใช้งาน"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/name_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="email"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/email_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ชื่อที่ใช้จัดส่งสินค้า"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/name_send_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ที่อยู่"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/address_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minLines="3"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="เบอร์โทร"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/tel_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp" />
+</LinearLayout>

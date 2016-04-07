@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
             @Override
             protected Void doInBackground(Void... voids) {
-                String url = "http://www.jaa-ikuzo.com/htb/getMyRecive.php?personId=1";
+                String url = "http://www.jaa-ikuzo.com/htb/getAllRecive.php";
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()

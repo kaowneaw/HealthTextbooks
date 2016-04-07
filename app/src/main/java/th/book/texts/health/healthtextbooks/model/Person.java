@@ -7,8 +7,9 @@ import android.os.Parcelable;
  * Created by KaowNeaw on 1/17/2016.
  */
 public class Person implements Parcelable {
-    private int personId;
+    private String personId;
     private String personName;
+    private String personNameSend;
     private String personAddress;
     private String personTel;
     private float personWeight;
@@ -19,8 +20,15 @@ public class Person implements Parcelable {
     private String password;
     private String personImg;
 
+    public String getPersonNameSend() {
+        return personNameSend;
+    }
 
-    public Person(int personId, String personName, String personAddress, String personTel, float personWeight, float personHeight, String personBirth, String personEmail, String username, String password, String personImg) {
+    public void setPersonNameSend(String personNameSend) {
+        this.personNameSend = personNameSend;
+    }
+
+    public Person(String personId, String personName, String personAddress, String personTel, float personWeight, float personHeight, String personBirth, String personEmail, String username, String password, String personImg) {
         this.personId = personId;
         this.personName = personName;
         this.personAddress = personAddress;
@@ -34,11 +42,11 @@ public class Person implements Parcelable {
         this.personImg = personImg;
     }
 
-    public int getPersonId() {
+    public String getPersonId() {
         return personId;
     }
 
-    public void setPersonId(int personId) {
+    public void setPersonId(String personId) {
         this.personId = personId;
     }
 
@@ -129,7 +137,7 @@ public class Person implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.personId);
+        dest.writeString(this.personId);
         dest.writeString(this.personName);
         dest.writeString(this.personAddress);
         dest.writeString(this.personTel);
@@ -143,7 +151,7 @@ public class Person implements Parcelable {
     }
 
     protected Person(Parcel in) {
-        this.personId = in.readInt();
+        this.personId = in.readString();
         this.personName = in.readString();
         this.personAddress = in.readString();
         this.personTel = in.readString();

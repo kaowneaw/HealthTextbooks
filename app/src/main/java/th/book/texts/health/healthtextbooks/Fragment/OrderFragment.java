@@ -84,7 +84,6 @@ public class OrderFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_order, container, false);
         lv_order = (ListView) v.findViewById(R.id.lv_order);
 
-
         return v;
     }
 
@@ -104,14 +103,20 @@ public class OrderFragment extends Fragment {
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
 
-            for (int i = 0; i < lv_order.getLastVisiblePosition() - lv_order.getFirstVisiblePosition(); i++) {
+            for (int i = 0; i < listMat.size(); i++) {
 
-                if (lv_order.getChildAt(i) != null) {
-
-                    View view = lv_order.getChildAt(i);
-                    EditText editText = (EditText) view.findViewById(R.id.matAmount);
-                    String string = editText.getText().toString();
-                    if (!string.equals("")) listMat.get(i).setAmount(Double.parseDouble(string));
+                Log.v("val=> " + i, adapter.getValueFromEDT(i) + "");
+//                if (lv_order.getChildAt(i) != null) {
+//
+//                    View view = lv_order.getChildAt(i);
+//                    EditText editText = (EditText) view.findViewById(R.id.matAmount);
+//                    int index = (Integer)editText.getTag();
+//                    //Log.v("Tag",(Integer)editText.getTag()+"");
+//                    String string = editText.getText().toString();
+//                    if (!string.equals("")) listMat.get(index).setAmount(Double.parseDouble(string));
+//                }
+                if (adapter.getValueFromEDT(i) != -1) {
+                    listMat.get(i).setAmount(adapter.getValueFromEDT(i));
                 }
             }
 
@@ -139,7 +144,6 @@ public class OrderFragment extends Fragment {
             protected Void doInBackground(Void... voids) {
                 String url = "http://www.jaa-ikuzo.com/htb/common/getAllMat.php";
                 OkHttpClient client = new OkHttpClient();
-
 
                 Request request = new Request.Builder()
                         .url(url)

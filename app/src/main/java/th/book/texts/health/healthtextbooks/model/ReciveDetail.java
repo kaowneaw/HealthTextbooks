@@ -11,8 +11,10 @@ public class ReciveDetail extends Recipe {
     String matName;
     String img;
     String matDesc;
+    String personId;
+    String personName;
 
-    public ReciveDetail(int recipeId, String recipeName, String recipeDesc, String recipeDate, int reciveMatId, int matId, float amount, String matName, String img, String matDesc) {
+    public ReciveDetail(int recipeId, String recipeName, String recipeDesc, String recipeDate, int reciveMatId, int matId, float amount, String matName, String img, String matDesc, String personId, String personName) {
         super(recipeId, recipeName, recipeDesc, recipeDate);
         this.reciveMatId = reciveMatId;
         this.matId = matId;
@@ -20,8 +22,9 @@ public class ReciveDetail extends Recipe {
         this.matName = matName;
         this.img = img;
         this.matDesc = matDesc;
+        this.personId = personId;
+        this.personName = personName;
     }
-
 
     public int getReciveMatId() {
         return reciveMatId;
@@ -69,5 +72,21 @@ public class ReciveDetail extends Recipe {
 
     public void setMatDesc(String matDesc) {
         this.matDesc = matDesc;
+    }
+
+    public String getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(String personId) {
+        this.personId = personId;
+    }
+
+    public String getPersonName() {
+        return personName;
+    }
+
+    public void setPersonName(String personName) {
+        this.personName = personName;
     }
 }

@@ -27,6 +27,7 @@ import java.util.List;
 
 import th.book.texts.health.healthtextbooks.Adapter.MyReciveAdapter;
 import th.book.texts.health.healthtextbooks.R;
+import th.book.texts.health.healthtextbooks.Utill.UserPreference;
 import th.book.texts.health.healthtextbooks.model.ReciveDetail;
 import th.book.texts.health.healthtextbooks.model.ResultEntity;
 
@@ -119,7 +120,8 @@ public class MyReciveFragment extends Fragment implements AdapterView.OnItemClic
 
             @Override
             protected Void doInBackground(Void... voids) {
-                String url = "http://www.jaa-ikuzo.com/htb/getMyRecive.php?personId=1";
+                UserPreference pref = new UserPreference(getContext());
+                String url = "http://www.jaa-ikuzo.com/htb/getMyRecive.php?personId=" + pref.getUserID();
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()

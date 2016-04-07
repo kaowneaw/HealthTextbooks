@@ -22,6 +22,7 @@ import java.util.List;
 import th.book.texts.health.healthtextbooks.Adapter.RefrigeratorAdapter;
 import th.book.texts.health.healthtextbooks.Adapter.RefrigeratorDetailAdapter;
 import th.book.texts.health.healthtextbooks.R;
+import th.book.texts.health.healthtextbooks.Utill.UserPreference;
 import th.book.texts.health.healthtextbooks.model.Refrigerator;
 import th.book.texts.health.healthtextbooks.model.ResultEntity;
 
@@ -88,7 +89,8 @@ public class RefrigeratorDetailFragment extends Fragment {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                String url = "http://www.jaa-ikuzo.com/htb/getRefragDetail.php?personId=1&matId=" + RefrigeratorDetailFragment.refriObj.getMatId();
+                UserPreference pref = new UserPreference(getContext());
+                String url = "http://www.jaa-ikuzo.com/htb/getRefragDetail.php?personId="+pref.getUserID()+"&matId=" + RefrigeratorDetailFragment.refriObj.getMatId();
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()

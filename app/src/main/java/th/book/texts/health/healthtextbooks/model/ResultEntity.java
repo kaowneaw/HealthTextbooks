@@ -2,17 +2,23 @@ package th.book.texts.health.healthtextbooks.model;
 
 import java.util.List;
 
-/**
- * Created by KaowNeaw on 12/27/2015.
- */
 public class ResultEntity {
 
     private List<Refrigerator> resultsRefrigerator;
     private List<Matirial> resultsMatirial;
     private List<Order> resultsOrder;
     private List<ReciveDetail> resultsRecive;
+    private List<Person> resultsPerson;
     private List<String> results;
     boolean status;
+
+    public List<Person> getResultsPerson() {
+        return resultsPerson;
+    }
+
+    public void setResultsPerson(List<Person> resultsPerson) {
+        this.resultsPerson = resultsPerson;
+    }
 
     public List<ReciveDetail> getResultsRecive() {
         return resultsRecive;

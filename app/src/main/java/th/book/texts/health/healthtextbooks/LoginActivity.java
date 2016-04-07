@@ -2,6 +2,7 @@ package th.book.texts.health.healthtextbooks;
 
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -28,6 +29,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.gson.Gson;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -43,6 +45,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import th.book.texts.health.healthtextbooks.Utill.UserPreference;
+import th.book.texts.health.healthtextbooks.model.ResultEntity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -91,8 +94,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String password = this.edtPassword.getText().toString();
             if (!username.equals("") && !password.equals("")) {
                 //login api
-                Intent i = new Intent(this, MainActivity.class);
-                startActivity(i);
+                UserPreference pref = new UserPreference(getApplicationContext(), "1", "สุดารัตน์ เอี่ยมสำอาง", "poo.sudarath@gmail.com");//Facebook not have username and password
+                if (pref.commit()) {
+
+                    Intent toMain = new Intent(getApplicationContext(), MainActivity.class);
+//                    toMain.putExtra("name", name);
+//                    toMain.putExtra("email", email);
+                    startActivity(toMain);
+                    THIS.finish();
+                }
+//                Intent i = new Intent(this, MainActivity.class);
+//                startActivity(i);
 //              checkUserServer(username,password);
             } else {
 
@@ -174,13 +186,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             String email = object.getString("email");
                                             UserPreference pref = new UserPreference(getApplicationContext(), id, name, email);//Facebook not have username and password
                                             if (pref.commit()) {
+                                                Toast.makeText(getApplicationContext(), "id : " + id, Toast.LENGTH_LONG).show();
+                                                callService(id, name, email);
                                                 Intent toMain = new Intent(getApplicationContext(), MainActivity.class);
                                                 toMain.putExtra("name", name);
                                                 toMain.putExtra("email", email);
                                                 startActivity(toMain);
                                                 THIS.finish();
                                             }
-
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -213,6 +226,64 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onActivityResult(requestCode, resultCode, data);
 
         callbackmanager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void callService(final String memberId, final String memberName, final String memberEmail) {
+
+        final ProgressDialog dialog = new ProgressDialog(this);
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                dialog.setMessage("Loading...");
+                dialog.show();
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                String url = "http://www.jaa-ikuzo.com/htb/incresePerson.php";
+                OkHttpClient client = new OkHttpClient();
+
+                RequestBody formBody = new FormEncodingBuilder()
+                        .add("personId", memberId)
+                        .add("personName", memberName)
+                        .add("personEmail", memberEmail)
+                        .build();
+
+                Request request = new Request.Builder()
+                        .post(formBody)
+                        .url(url)
+                        .build();
+                try {
+
+                    Gson gson = new Gson();
+                    Response response = client.newCall(request).execute();
+                    String reponse = response.body().string();
+                    Log.v("=>", reponse);
+                    ResultEntity results = gson.fromJson(reponse, ResultEntity.class);
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+
+        }.execute();
     }
 
 

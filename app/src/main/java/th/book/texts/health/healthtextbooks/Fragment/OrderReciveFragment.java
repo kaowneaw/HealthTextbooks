@@ -26,6 +26,7 @@ import java.util.List;
 import th.book.texts.health.healthtextbooks.Adapter.OrderAdapter;
 import th.book.texts.health.healthtextbooks.Adapter.OrderReciveAdapter;
 import th.book.texts.health.healthtextbooks.R;
+import th.book.texts.health.healthtextbooks.Utill.UserPreference;
 import th.book.texts.health.healthtextbooks.model.Order;
 import th.book.texts.health.healthtextbooks.model.ResultEntity;
 
@@ -96,7 +97,8 @@ public class OrderReciveFragment extends Fragment implements AdapterView.OnItemC
 
             @Override
             protected Void doInBackground(Void... voids) {
-                String url = "http://www.jaa-ikuzo.com/htb/getMyOrder.php?personId=1";
+                UserPreference pref = new UserPreference(getContext());
+                String url = "http://www.jaa-ikuzo.com/htb/getMyOrder.php?personId="+pref.getUserID();
                 OkHttpClient client = new OkHttpClient();
 
 

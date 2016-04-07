@@ -1,6 +1,7 @@
 package th.book.texts.health.healthtextbooks.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,20 +58,34 @@ public class OrderReciveAdapter extends BaseAdapter {
 
             holder = new viewHolder();
             holder.recive_date = (TextView) convertView.findViewById(R.id.recive_date);
-
+            holder.status = (TextView) convertView.findViewById(R.id.status);
             convertView.setTag(holder);
         } else {
             holder = (viewHolder) convertView.getTag();
         }
 
         holder.recive_date.setText("รายการสั่งซื้อวันที่ " + listOrder.get(position).getOrderDate());
-
+        int status = listOrder.get(position).getOrderStatus();
+        holder.status.setText(getStatus(status));
+        if (status == 0) {
+            holder.status.setTextColor(Color.RED);
+        } else {
+            holder.status.setTextColor(Color.GREEN);
+        }
         return convertView;
     }
 
     public class viewHolder {
         TextView recive_date;
+        TextView status;
+    }
 
+    private String getStatus(int status) {
+        if (status == 0) {
+            return "รอการดำเนินการ";
+        } else {
+            return "กำลังดำเนินการ";
+        }
     }
 
 }

@@ -1,37 +1,38 @@
 package th.book.texts.health.healthtextbooks;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.androidquery.AQuery;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 
-import th.book.texts.health.healthtextbooks.Fragment.DietFragment;
 import th.book.texts.health.healthtextbooks.Fragment.HomeFragment;
+import th.book.texts.health.healthtextbooks.Fragment.MyProfileFragment;
 import th.book.texts.health.healthtextbooks.Fragment.MyReciveFragment;
 import th.book.texts.health.healthtextbooks.Fragment.OrderFragment;
 import th.book.texts.health.healthtextbooks.Fragment.OrderReciveFragment;
-import th.book.texts.health.healthtextbooks.Fragment.ProfileFragment;
+import th.book.texts.health.healthtextbooks.Fragment.CalorieFragment;
 import th.book.texts.health.healthtextbooks.Fragment.RefrigeratorFragment;
 import th.book.texts.health.healthtextbooks.Utill.UserPreference;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private UserPreference pref;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         pref = new UserPreference(this);
         Toast.makeText(getApplicationContext(), pref.getName(), Toast.LENGTH_SHORT).show();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
@@ -66,11 +67,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initial() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, RefrigeratorFragment.newInstance("", "")).commit();
-        ImageView profile = (ImageView) findViewById(R.id.profile);
-        TextView nameProfile = (TextView) findViewById(R.id.nameProfile);
-        TextView emailProfile = (TextView) findViewById(R.id.emailProfile);
-//      nameProfile.setText(pref.getName());
-//      emailProfile.setText(pref.getEmail());
+        NavigationView nav_view = (NavigationView) findViewById(R.id.nav_view);
+        View headView = nav_view.getHeaderView(0);
+        ImageView profile = (ImageView) headView.findViewById(R.id.profile);
+        TextView nameProfile = (TextView) headView.findViewById(R.id.nameProfile);
+        TextView emailProfile = (TextView) headView.findViewById(R.id.emailProfile);
+        nameProfile.setText(pref.getName());
+        emailProfile.setText(pref.getEmail());
+        AQuery aq = new AQuery(getApplicationContext());
+        aq.id(profile).image("https://graph.facebook.com/" + pref.getUserID() + "/picture?width=150&height=150");
     }
 
 
@@ -117,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_camera) {
             fragmentTransaction.replace(R.id.container, HomeFragment.newInstance("", ""));
             fragmentTransaction.addToBackStack(null).commit();
-        } else if (id == R.id.profile) {
-            fragmentTransaction.replace(R.id.container, ProfileFragment.newInstance("", ""));
+        } else if (id == R.id.cal) {
+            fragmentTransaction.replace(R.id.container, CalorieFragment.newInstance("", ""));
             fragmentTransaction.addToBackStack(null).commit();
         } else if (id == R.id.recivebook) {
             fragmentTransaction.replace(R.id.container, MyReciveFragment.newInstance("", ""));
@@ -132,6 +137,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.my_order) {
             fragmentTransaction.replace(R.id.container, OrderReciveFragment.newInstance("", ""));
             fragmentTransaction.addToBackStack(null).commit();
+        } else if (id == R.id.myprofile) {
+            fragmentTransaction.replace(R.id.container, MyProfileFragment.newInstance("", ""));
+            fragmentTransaction.addToBackStack(null).commit();
+        } else if (id == R.id.logout) {
+            FacebookSdk.sdkInitialize(this);
+            LoginManager.getInstance().logOut();
+            UserPreference pref = new UserPreference(this);
+            pref.clearPreference();
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -29,6 +29,7 @@ import java.util.List;
 import th.book.texts.health.healthtextbooks.Adapter.RefrigeratorAdapter;
 import th.book.texts.health.healthtextbooks.Adapter.SpinnerMatirialAdapter;
 import th.book.texts.health.healthtextbooks.R;
+import th.book.texts.health.healthtextbooks.Utill.UserPreference;
 import th.book.texts.health.healthtextbooks.model.Matirial;
 import th.book.texts.health.healthtextbooks.model.Refrigerator;
 import th.book.texts.health.healthtextbooks.model.ResultEntity;
@@ -91,7 +92,8 @@ public class RefrigeratorFragment extends Fragment implements AdapterView.OnItem
 
             @Override
             protected Void doInBackground(Void... voids) {
-                String url = "http://www.jaa-ikuzo.com/htb/getRefrag.php?personId=1";
+                UserPreference pref = new UserPreference(getContext());
+                String url = "http://www.jaa-ikuzo.com/htb/getRefrag.php?personId=" + pref.getUserID();
                 OkHttpClient client = new OkHttpClient();
 //                RequestBody formBody = new FormEncodingBuilder()
 //                        .add("type", String.valueOf(typeId))

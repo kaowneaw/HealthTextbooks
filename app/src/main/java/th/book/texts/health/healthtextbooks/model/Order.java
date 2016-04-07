@@ -9,12 +9,12 @@ import android.os.Parcelable;
 public class Order implements Parcelable {
 
     private int orderId;
-    private int personId;
+    private String personId;
     private String orderDate;
     private int orderStatus;
     private double totalPrice;
 
-    public Order(int orderId, int personId, String orderDate, int orderStatus, double totalPrice) {
+    public Order(int orderId, String personId, String orderDate, int orderStatus, double totalPrice) {
         this.orderId = orderId;
         this.personId = personId;
         this.orderDate = orderDate;
@@ -30,11 +30,11 @@ public class Order implements Parcelable {
         this.orderId = orderId;
     }
 
-    public int getPersonId() {
+    public String getPersonId() {
         return personId;
     }
 
-    public void setPersonId(int personId) {
+    public void setPersonId(String personId) {
         this.personId = personId;
     }
 
@@ -71,7 +71,7 @@ public class Order implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.orderId);
-        dest.writeInt(this.personId);
+        dest.writeString(this.personId);
         dest.writeString(this.orderDate);
         dest.writeInt(this.orderStatus);
         dest.writeDouble(this.totalPrice);
@@ -79,7 +79,7 @@ public class Order implements Parcelable {
 
     protected Order(Parcel in) {
         this.orderId = in.readInt();
-        this.personId = in.readInt();
+        this.personId = in.readString();
         this.orderDate = in.readString();
         this.orderStatus = in.readInt();
         this.totalPrice = in.readDouble();

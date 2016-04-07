@@ -9,7 +9,7 @@ import android.os.Parcelable;
 public class Refrigerator implements Parcelable {
 
     private int reId;
-    private int personId;
+    private String personId;
     private int matId;
     private float amount;
     private String dateRecive;
@@ -22,7 +22,7 @@ public class Refrigerator implements Parcelable {
     private  int expireIn;
     private String img;
 
-    public Refrigerator(int reId, int personId, int matId, float amount, String dateRecive, String matName, int matTypeId, float calorie, int unitId, int expireDay, String matDesc, int expireIn, String img) {
+    public Refrigerator(int reId, String personId, int matId, float amount, String dateRecive, String matName, int matTypeId, float calorie, int unitId, int expireDay, String matDesc, int expireIn, String img) {
         this.reId = reId;
         this.personId = personId;
         this.matId = matId;
@@ -46,11 +46,11 @@ public class Refrigerator implements Parcelable {
         this.reId = reId;
     }
 
-    public int getPersonId() {
+    public String getPersonId() {
         return personId;
     }
 
-    public void setPersonId(int personId) {
+    public void setPersonId(String personId) {
         this.personId = personId;
     }
 
@@ -150,7 +150,7 @@ public class Refrigerator implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.reId);
-        dest.writeInt(this.personId);
+        dest.writeString(this.personId);
         dest.writeInt(this.matId);
         dest.writeFloat(this.amount);
         dest.writeString(this.dateRecive);
@@ -166,7 +166,7 @@ public class Refrigerator implements Parcelable {
 
     protected Refrigerator(Parcel in) {
         this.reId = in.readInt();
-        this.personId = in.readInt();
+        this.personId = in.readString();
         this.matId = in.readInt();
         this.amount = in.readFloat();
         this.dateRecive = in.readString();
