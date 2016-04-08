@@ -5,9 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -63,11 +68,36 @@ public class RefrigeratorFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.refri_order, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.order) {
+
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, OrderFragment.newInstance("", ""));
+            fragmentTransaction.addToBackStack(null).commit();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -95,7 +125,7 @@ public class RefrigeratorFragment extends Fragment implements AdapterView.OnItem
                 UserPreference pref = new UserPreference(getContext());
                 String url = "http://www.jaa-ikuzo.com/htb/getRefrag.php?personId=" + pref.getUserID();
                 OkHttpClient client = new OkHttpClient();
-//                RequestBody formBody = new FormEncodingBuilder()
+//              RequestBody formBody = new FormEncodingBuilder()
 //                        .add("type", String.valueOf(typeId))
 //                        .add("province_id", String.valueOf(provinceId)).build();
 
